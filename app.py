@@ -35,13 +35,13 @@ perso_y = 256
 def deplacement_perso(x,y):
     if px.btnp(px.KEY_ESCAPE):
         px.quit
-    if px.btn(px.RIGHT):
+    if px.btn(px.KEY_RIGHT):
         x += 1
-    if px.btn(px.LEFT):
+    if px.btn(px.KEY_LEFT):
         x += -1
-    if px.btn(px.UP):
+    if px.btn(px.KEY_UP):
         y += 1
-    if px.btn(px.DOWN):
+    if px.btn(px.KEY_DOWN):
         y += -1
 
 
