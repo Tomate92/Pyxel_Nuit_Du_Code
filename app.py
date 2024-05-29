@@ -16,7 +16,7 @@ import random
 px.init(256, 256, title="Test")
 
 # chargement des ressources
-px.load("3.pyxres")
+px.load("datas.pyxres")
 
 #####################################################
 ##################### Variables #####################
@@ -25,7 +25,8 @@ px.load("3.pyxres")
 perso_x = 7
 perso_y = 236
 
-# persoAuthMouv = True
+#Init time
+temps = 0
 
 ennemis_liste = []
 
@@ -33,7 +34,7 @@ ennemis_liste = []
 tirs_liste = []
 
 # init des rochers
-rochersListL = [[5, 210], [20, 210], [60, 210], [95, 210], [95, 228], [95, 243], [60, 60], [75, 60], [75, 77], [58, 75], [120, 55], [120, 125], [142, 126]]
+rochersListL = [[5, 210], [5, 190], [5, 175], [20, 175], [20, 210], [60, 210], [95, 210], [95, 228], [95, 243], [60, 60], [75, 60], [75, 77], [58, 75], [120, 55], [120, 125], [142, 126], [158, 126], [178, 131], [180, 205], [195, 205], [183, 35], [201, 36]]
 rocherListB = []
 
 perso_pos = '1'
@@ -172,7 +173,7 @@ def update():
 ##################### VOID DRAW #####################
 
 def draw():
-    global perso_pos, perso_x, perso_y, vies
+    global perso_pos, perso_x, perso_y, vies, temps
     # Fond rouge
     px.cls(4)
 
@@ -198,6 +199,13 @@ def draw():
     if vies > 0:
         px.text(5, 5, 'VIES:' + str(vies), 7)
 
+        #Affiche le temps
+        if px.frame_count % 30 == 0:
+            temps += 1
+            px.text(200, 5, str(temps) + 's', 3)
+        else:
+            px.text(200, 5, str(temps) + 's', 3)
+
         # tirs
         for tir in tirs_liste:
             px.blt(tir[0], tir[1], 0, 48, 8, 7, 7, 5)
@@ -208,6 +216,7 @@ def draw():
             if ennemi[2] == '1':
                 px.blt(ennemi[0], ennemi[1], 0, 0, 120, -16, 16, 5)
     else:
+        px.cls(0)
         px.text(100, 128, 'GAME OVER', 7)
 
     # tirs
