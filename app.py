@@ -19,7 +19,8 @@ px.init(256, 256, title="Test")
 px.load("datas.pyxres")
 
 
-
+# initialisation des tirs
+tirs_liste = []
 #####################################################
 ##################### Variables #####################
 #####################################################
@@ -52,16 +53,41 @@ def deplacement_perso(x,y):
         if (y > 0):
             y = y - 1
     if px.btn(px.KEY_DOWN):
-        if (y < 238):
+        if (y < 248):
             y = y + 1
     return x, y
 
-
+def tirs_creation(x,y,tirs_liste):
+    if px.btnr(px.MOUSE_BUTTON_LEFT) or px.btnr(px.KEY_SPACE):
+        tirs_liste.append([x+8, y-4])
+    return tirs_liste
+def tirs_deplacement(tirs_liste):
+    for tir in tirs_liste:
+        tir[1] -= 1
+        if  tir[1]<-8:
+            tirs_liste.remove(tir)
+    return tirs_liste
 #################### VOID UPDATE ####################
 def update():
-    global perso_x, perso_y
+    global perso_x, perso_y,tirs_liste 
     perso_x, perso_y = deplacement_perso(perso_x, perso_y)
 
+        # creation des tirs en fonction de la position du vaisseau
+    tirs_liste = tirs_creation(vaisseau_x, vaisseau_y, tirs_liste)
+
+    # mise a jour des positions des tirs
+    tirs_liste = tirs_deplacement(tirs_liste)
+    
+def tirs_creation(x,y,tirs_liste):
+    if px.btnr(px.MOUSE_BUTTON_LEFT) or px.btnr(px.KEY_SPACE):
+        tirs_liste.append([x+8, y-4])
+    return tirs_liste
+def tirs_deplacement(tirs_liste):
+    for tir in tirs_liste:
+        tir[1] -= 1
+        if  tir[1]<-8:
+            tirs_liste.remove(tir)
+    return tirs_liste
 
 ##################### VOID DRAW #####################
 
@@ -83,13 +109,13 @@ def draw():
     px.blt(5, 210, 0, 176, 128, 16, 15, 5)
     px.blt(20, 210, 0, 176, 128, 16, 15, 5)
     px.blt(60, 210, 0, 176, 128, 16, 15, 5)
-    px.blt(95, 228, 0, 176, 128, 16, 15, 5)
-    px.blt(95, 243, 0, 176, 128, 16, 15, 5)
-
+    px.blt(75, 235, 0, 176, 128, 16, 15, 5)
     #Rochers 3x16
     px.blt(75, 210, 0, 224, 128, 3*16, 16, 5)
 
-
+            # tirs
+    for tir in tirs_liste:
+        px.rect(tir[0], tir[1], 1, 4, 10)
 
 
 
