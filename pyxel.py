@@ -13,7 +13,7 @@ import random
 
 # taille de la fenetre 128x128 pixels OU 256x256
 # /!\ ne pas modifier => taille obligatoire pour le concours
-px.init(256, 256, title="Test Nuit du c0de")
+px.init(256, 256, title="Test")
 
 # chargement des ressources
 px.load("3.pyxres")
