@@ -22,6 +22,10 @@ px.load("datas.pyxres")
 # initialisation des tirs
 tirs_liste = []
 
+# init des rochers
+rochersListL = [[5, 210], [20, 210], [60, 210], [95, 210], [95, 228], [95, 243]]
+rocherListB = []
+
 #####################################################
 ##################### Variables #####################
 #####################################################
@@ -70,6 +74,14 @@ def tirs_deplacement(tirs_liste):
         if  tir[1]<-8:
             tirs_liste.remove(tir)
     return tirs_liste
+
+"""def rochersL_creation(x, y):
+    global rochersListL
+    rochersListL.append([x, y])
+
+def rochersL_creation(x, y):"""
+
+
 #################### VOID UPDATE ####################
 def update():
     global perso_x, perso_y, perso_x, perso_y, tirs_liste
@@ -99,11 +111,14 @@ def draw():
 
     #Draw le décor (rochers)
     #Rochers simples
-    px.blt(5, 210, 0, 176, 128, 16, 15, 5)
+    """px.blt(5, 210, 0, 176, 128, 16, 15, 5)
     px.blt(20, 210, 0, 176, 128, 16, 15, 5)
     px.blt(60, 210, 0, 176, 128, 16, 15, 5)
     px.blt(95, 228, 0, 176, 128, 16, 15, 5)
-    px.blt(95, 243, 0, 176, 128, 16, 15, 5)
+    px.blt(95, 243, 0, 176, 128, 16, 15, 5)"""
+    for rocherL in rochersListL:
+        px.blt(rocherL[0], rocherL[1], 0, 176, 128, 16, 15, 5)
+
 
     #Rochers 3x16
     px.blt(75, 210, 0, 224, 128, 3*16, 16, 5)
