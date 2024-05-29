@@ -59,18 +59,18 @@ def deplacement_perso(x, y):
     global rochersListL, perso_x, perso_y, perso_pos  # , persoAuthMouv
     x2, y2 = x, y
     if px.btn(px.KEY_RIGHT):
-        if (x < 248):
+        if (x < 238):
             x2 = x + 3
             perso_pos = '1'
     if px.btn(px.KEY_LEFT):
-        if (x > 0):
+        if (x > 5):
             x2 = x - 3
             perso_pos = '2'
     if px.btn(px.KEY_DOWN):
-        if (y < 248):
+        if (y < 238):
             y2 = y + 3
     if px.btn(px.KEY_UP):
-        if (y > 0):
+        if (y > 10):
             y2 = y - 3
 
     for rocher in rochersListL:  # Si joueur trop proche rocher, on change pas les x,y
