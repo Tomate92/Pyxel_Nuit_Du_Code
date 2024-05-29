@@ -218,6 +218,7 @@ def draw():
     else:
         px.cls(0)
         px.text(100, 128, 'GAME OVER', 7)
+        px.text(100, 158, 'Vous avez survecu ' + str(temps) + "s !", 3)
 
     # tirs
 
