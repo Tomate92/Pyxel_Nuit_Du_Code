@@ -18,8 +18,7 @@ px.init(256, 256, title="Test")
 # chargement des ressources
 px.load("3.pyxres")
 
-# initialisation des tirs
-tirs_liste = []
+
 #####################################################
 ##################### Variables #####################
 #####################################################
@@ -27,33 +26,43 @@ tirs_liste = []
 perso_x = 7
 perso_y = 236
 
+persoAuthMouv = True
+
 ennemis_liste = [[61, 43], [52, 93], [59, 12]]
 
+# initialisation des tirs
+tirs_liste = []
+
+# init des rochers
+rochersListL = [[5, 210], [20, 210], [60, 210], [95, 210], [95, 228], [95, 243]]
+rocherListB = []
 
 #####################################################
 ##################### FONCTIONS #####################
 #####################################################
 
 
-#####################################################
-##################### PROGRAMME #####################
-#####################################################
-
 def deplacement_perso(x, y):
-    if px.btnp(px.KEY_ESCAPE):
-        px.quit
-    if px.btn(px.KEY_RIGHT):
-        if (x < 248):
-            x = x + 1
-    if px.btn(px.KEY_LEFT):
-        if (x > 0):
-            x = x - 1
-    if px.btn(px.KEY_UP):
-        if (y > 0):
-            y = y - 1
-    if px.btn(px.KEY_DOWN):
-        if (y < 248):
-            y = y + 1
+    global rochersListL, perso_x, perso_y, persoAuthMouv
+
+    for rocher in rochersListL:
+        if rocher[0] <= perso_x+15 and rocher[1] <= perso_y+15 and rocher[0]+8 >= perso_x and rocher[1]+8 >= perso_y:
+            pass
+        else:
+            if px.btnp(px.KEY_ESCAPE):
+                px.quit
+            if px.btn(px.KEY_RIGHT):
+                if (x < 248):
+                    x = x + 1
+            if px.btn(px.KEY_LEFT):
+                if (x > 0):
+                    x = x - 1
+            if px.btn(px.KEY_UP):
+                if (y > 0):
+                    y = y - 1
+            if px.btn(px.KEY_DOWN):
+                if (y < 238):
+                    y = y + 1
     return x, y
 
 
@@ -94,6 +103,23 @@ def tirs_deplacement(tirs_liste):
 
     return tirs_liste
 
+"""def rochersL_colisions(x, y):
+    global rochersListL, perso_x, perso_y, persoAuthMouv
+
+    persoAuthMouv = True
+
+    for rocher in rochersListL:
+        if rocher[0] <= perso_x+15 and rocher[1] <= perso_y+15 and rocher[0]+8 >= perso_x and rocher[1]+8 >= perso_y:
+            persoAuthMouv = False"""
+
+
+#def rochersL_creation(x, y):
+
+
+
+#####################################################
+##################### PROGRAMME #####################
+#####################################################
 
 #################### VOID UPDATE ####################
 def update():
@@ -124,14 +150,13 @@ def draw():
 
     px.blt(perso_x, perso_y, 0, 0, 8, 16, 15, 5)
 
-    # Draw le décor (rochers)
-    # Rochers simples
-    px.blt(5, 210, 0, 176, 128, 16, 15, 5)
-    px.blt(20, 210, 0, 176, 128, 16, 15, 5)
-    px.blt(60, 210, 0, 176, 128, 16, 15, 5)
-    px.blt(75, 235, 0, 176, 128, 16, 15, 5)
-    # Rochers 3x16
-    px.blt(75, 210, 0, 224, 128, 3 * 16, 16, 5)
+    #Draw le décor (rochers)
+    #Rochers simples
+    for rocherL in rochersListL:
+        px.blt(rocherL[0], rocherL[1], 0, 176, 128, 16, 15, 5)
+
+    #Rochers 3x16
+    px.blt(75, 210, 0, 224, 128, 3*16, 16, 5)
 
     # tirs
     for tir in tirs_liste:
