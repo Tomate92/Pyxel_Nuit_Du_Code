@@ -67,6 +67,7 @@ def deplacement_perso(x, y):
             pass
         else:
             x, y = x2, y2 
+            pass
     return x, y
 
 
