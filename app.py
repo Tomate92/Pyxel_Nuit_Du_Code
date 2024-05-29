@@ -47,7 +47,7 @@ vies = 4
 
 
 def deplacement_perso(x, y):
-    global rochersListL, perso_x, perso_y#, persoAuthMouv
+    #global rochersListL, perso_x, perso_y#, persoAuthMouv
     x2, y2 = x, y
 
     if px.btnp(px.KEY_ESCAPE):
@@ -66,8 +66,8 @@ def deplacement_perso(x, y):
         if (y < 238):
             y2 += 1
 
-    for rocher in rochersListL:
-        if rocher[0] < x2 < rocher[0]+23 and rocher[1] < y2 < rocher[1]:
+    for rocher in rochersListL: #Si joueur trop proche rocher, on change pas les x,y
+        if rocher[0]-17 < x2 < rocher[0]+14 and rocher[1]-14 < y2 < rocher[1]+15:
             return x, y
 
     return x2, y2
@@ -170,7 +170,7 @@ def ennemis_suppression():
 #################### VOID UPDATE ####################
 def update():
     global perso_x, perso_y, ennemis_liste, tirs_liste, vies
-    perso_x, perso_y, perso_pos = deplacement_perso(perso_x, perso_y)
+    perso_x, perso_y = deplacement_perso(perso_x, perso_y)
     ennemis_liste = ennemis_deplacement(ennemis_liste, perso_x, perso_y)
     ennemis_liste = ennemis_creation(ennemis_liste, perso_x)
 
