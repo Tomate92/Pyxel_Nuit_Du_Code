@@ -16,7 +16,7 @@ import random
 px.init(256, 256, title="Test")
 
 # chargement des ressources
-px.load("3.pyxres")
+px.load("datas.pyxres")
 
 #####################################################
 ##################### Variables #####################
@@ -24,6 +24,9 @@ px.load("3.pyxres")
 
 perso_x = 7
 perso_y = 236
+
+#Init time
+temps = 0
 
 # persoAuthMouv = True
 
@@ -108,6 +111,7 @@ def ennemis_creation(ennemis_liste, x_du_perso):
 
 def tirs_creation(x, y, tirs_liste, perso_pos):
     if px.btnr(px.MOUSE_BUTTON_LEFT) or px.btnr(px.KEY_SPACE):
+        px.play(0,0)
         if perso_pos == '1':
             tirs_liste.append([x + 16, y + 3, perso_pos])
         elif perso_pos == '2':
@@ -156,6 +160,7 @@ def ennemis_suppression():
                 tirs_liste.remove(tir)
                 explosions_creation(ennemi[0], ennemi[1])
                 kill += 1
+                px.play(1, 1)
     return ennemis_liste
 
 
@@ -177,6 +182,9 @@ def explosions_animation():
 #################### VOID UPDATE ####################
 def update():
     global perso_x, perso_y, ennemis_liste, tirs_liste, vies, perso_pos
+    if px.frame_count == 0:
+        px.playm(0, 20, True)
+
     perso_x, perso_y, perso_pos = deplacement_perso(perso_x, perso_y)
     ennemis_liste = ennemis_deplacement(ennemis_liste, perso_x, perso_y)
     ennemis_liste = ennemis_creation(ennemis_liste, perso_x)
@@ -195,7 +203,7 @@ def update():
 ##################### VOID DRAW #####################
 
 def draw():
-    global perso_pos, perso_x, perso_y, vies, kill
+    global perso_pos, perso_x, perso_y, vies, kill, temps
     # Fond rouge
     px.cls(4)
 
@@ -215,10 +223,15 @@ def draw():
     for rocherL in rochersListL:
         px.blt(rocherL[0], rocherL[1], 0, 176, 128, 16, 15, 5)
 
-    # Rochers 3x16
-    px.blt(75, 210, 0, 224, 128, 3 * 16, 16, 5)
 
     if vies > 0:
+        #Affiche le temps
+        if px.frame_count % 30 == 0:
+            temps += 1
+            px.text(120, 10, str(temps) + 's', 7)
+        else:
+            px.text(120, 10, str(temps) + 's', 7)
+
         px.blt(5, 5, 0, 48, 216, 16, 16, 5)
         px.text(25, 10, str(vies), 7)
         px.blt(235, 5, 0, 32, 216, 16, 16, 5)
@@ -239,6 +252,7 @@ def draw():
         px.cls(0)
 
         px.text(107, 110, 'GAME OVER', 7)
+        px.text(100, 158, 'Vous avez survecu ' + str(temps) + "s !", 3)
         px.blt(110, 128, 0, 32, 184, 16, 16, 5)
         px.text(130, 133, str(kill), 7)
         if (px.frame_count % 120 == 0):
