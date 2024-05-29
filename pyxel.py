@@ -7,8 +7,6 @@
 
 # Copyright © 2024 GauGoth Corp. All rights reserved - http://gaugoth.corp.free.fr
 import pyxel
-
-import pyxel as px
 import random  
 
 
@@ -16,10 +14,10 @@ import random
 
 # taille de la fenetre 128x128 pixels OU 256x256
 # /!\ ne pas modifier => taille obligatoire pour le concours
-px.init(256, 256, title="Test Nuit du c0de")
+pyxel.init(256, 256, title="Test Nuit du c0de")
 
 # chargement des ressources
-px.load("3.pyxres")
+pyxel.load("3.pyxres")
 
 
 
