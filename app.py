@@ -210,7 +210,7 @@ def draw():
     else:
         px.text(100, 128, 'GAME OVER', 7)
 
-    # tirs
+    #  tirs
 
 
 ##################### EXECUTION DU CODE #####################
