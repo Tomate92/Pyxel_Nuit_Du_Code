@@ -74,8 +74,10 @@ def ennemis_deplacement(ennemis_liste, x_du_perso, y_du_perso):
     for ennemi in ennemis_liste:
         if x_du_perso > ennemi[0]:
             ennemi[0] += 1
+            ennemi[2] = '2'
         if x_du_perso < ennemi[0]:
             ennemi[0] -= 1
+            ennemi[2] = '1'
         if y_du_perso > ennemi[1]:
             ennemi[1] += 1
         if y_du_perso < ennemi[1]:
@@ -130,7 +132,7 @@ def update():
     global perso_x, perso_y, ennemis_liste, tirs_liste
     perso_x, perso_y = deplacement_perso(perso_x, perso_y)
     ennemis_liste = ennemis_deplacement(ennemis_liste, perso_x, perso_y)
-    ennemis_liste = ennemis_creation(ennemis_liste)
+    ennemis_liste = ennemis_creation(ennemis_liste, perso_x)
 
     # creation des tirs en fonction de la position du vaisseau
     tirs_liste = tirs_creation(perso_x, perso_y, tirs_liste)
@@ -167,8 +169,10 @@ def draw():
         px.rect(tir[0], tir[1], 1, 4, 10)
 
     for ennemi in ennemis_liste:
-        # px.rect(ennemi[0], ennemi[1], 8, 8, 15)
-        px.blt(ennemi[0], ennemi[1], 0, 0, 120, 16, 16, 5)
+        if ennemi[2] == '2':
+            px.blt(ennemi[0], ennemi[1], 0, 0, 120, -16, 16, 5)
+        if ennemi[2] == '1':
+            px.blt(ennemi[0], ennemi[1], 0, 0, 120, 16, 16, 5)
 
 
 ##################### EXECUTION DU CODE #####################
