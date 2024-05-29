@@ -6,6 +6,8 @@
 # Installer Pyxel en portable en local (très pratique à l'école car on a pas les droits admin) : https://nuit-du-code.forge.apps.education.fr/DOCUMENTATION/05-materiel-logiciels#python-pyxel_1
 
 # Copyright © 2024 GauGoth Corp. All rights reserved - http://gaugoth.corp.free.fr
+import pyxel
+
 import pyxel as px
 import random  
 
@@ -27,6 +29,7 @@ px.load("3.pyxres")
 
 
 
+
 #####################################################
 ##################### PROGRAMME #####################
 #####################################################
@@ -34,7 +37,9 @@ px.load("3.pyxres")
 
 
 #################### VOID UPDATE ####################
-
+def update():
+    if pyxel.btnp(pyxel.KEY_ESCAPE):
+        pyxel.quit
 
 
 
