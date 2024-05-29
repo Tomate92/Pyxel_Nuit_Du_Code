@@ -81,12 +81,17 @@ def ennemis_deplacement(ennemis_liste, x_du_perso, y_du_perso):
     return ennemis_liste
 
 
-def ennemis_creation(ennemis_liste, x_du_perso, y_du_perso):
+def ennemis_creation(ennemis_liste, x_du_perso):
     x_ennemi = random.randint(0, 256)
     y_ennemi = random.randint(0, 256)
+
+    if x_du_perso > x_ennemi:
+        position = '2'
+    if x_du_perso < x_ennemi:
+        position = '1'
     # un ennemi par seconde
     if (px.frame_count % 30 == 0):
-        ennemis_liste.append([x_ennemi, y_ennemi])
+        ennemis_liste.append([x_ennemi, y_ennemi, position])
     return ennemis_liste
 
 
@@ -165,8 +170,10 @@ def draw():
         px.blt(tir[0], tir[1], 0, 48, 8, 7, 7, 5)
 
     for ennemi in ennemis_liste:
-        # px.rect(ennemi[0], ennemi[1], 8, 8, 15)
-        px.blt(ennemi[0], ennemi[1], 0, 0, 120, 16, 16, 5)
+        if ennemi[2] == '2':
+            px.blt(ennemi[0], ennemi[1], 0, 0, 120, -16, 16, 5)
+        if ennemi[2] == '1':
+            px.blt(ennemi[0], ennemi[1], 0, 0, 120, 16, 16, 5)
 
 
 ##################### EXECUTION DU CODE #####################
