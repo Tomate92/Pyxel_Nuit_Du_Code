@@ -87,18 +87,18 @@ def ennemis_deplacement(ennemis_liste, x_du_perso, y_du_perso):
     return ennemis_liste
 
 
-def ennemis_creation(ennemis_liste):
-    """création aléatoire des ennemis"""
-
+def ennemis_creation(ennemis_liste, x_du_perso, y_du_perso):
+    x_ennemi = random.randint(0, 256)
+    y_ennemi = random.randint(0, 256)
     # un ennemi par seconde
     if (px.frame_count % 30 == 0):
-        ennemis_liste.append([random.randint(0, 256), random.randint(0, 256)])
+        ennemis_liste.append([x_ennemi, y_ennemi])
     return ennemis_liste
 
 
 def tirs_creation(x, y, tirs_liste):
     if px.btnr(px.MOUSE_BUTTON_LEFT) or px.btnr(px.KEY_SPACE):
-        tirs_liste.append([x + 16, y + 8])
+        tirs_liste.append([x + 16, y + 3])
     return tirs_liste
 
 
@@ -168,7 +168,7 @@ def draw():
 
     # tirs
     for tir in tirs_liste:
-        px.rect(tir[0], tir[1], 1, 4, 10)
+        px.blt(tir[0], tir[1], 0, 48, 8, 7, 7, 5)
 
     for ennemi in ennemis_liste:
         # px.rect(ennemi[0], ennemi[1], 8, 8, 15)
