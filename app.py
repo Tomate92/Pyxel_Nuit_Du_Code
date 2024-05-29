@@ -244,7 +244,7 @@ def draw():
         if (px.frame_count % 120 == 0):
             px.quit()
 
-    # tirs
+    #  tirs
 
 
 ##################### EXECUTION DU CODE #####################
