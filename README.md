@@ -3,6 +3,7 @@ Copyright © 2024 GauGoth Corp. All rights reserved
 
 #############################################
 Welcome to Super Spider Destroyer !!!!
+Play: https://www.pyxelstudio.net/ps/y74ajmv3
  
 The goal of this game is to kill spiders and survive. 
 The keys :
