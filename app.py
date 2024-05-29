@@ -33,7 +33,7 @@ ennemis_liste = []
 tirs_liste = []
 
 # init des rochers
-rochersListL = [[5, 210], [20, 210], [60, 210], [95, 210], [95, 228], [95, 243]]
+rochersListL = [[5, 210], [20, 210], [60, 210], [95, 210], [95, 228], [95, 243], [60, 60], [75, 60], [75, 75], [60, 75]]
 rocherListB = []
 
 perso_pos = '1'
@@ -208,7 +208,7 @@ def draw():
         px.blt(rocherL[0], rocherL[1], 0, 176, 128, 16, 15, 5)
 
     # Rochers 3x16
-    px.blt(75, 210, 0, 224, 128, 3 * 16, 16, 5)
+    #px.blt(75, 210, 0, 224, 128, 3 * 16, 16, 5)
 
     if vies > 0:
         px.text(5, 5, 'VIES:' + str(vies), 7)
