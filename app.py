@@ -72,8 +72,10 @@ def ennemis_deplacement(ennemis_liste, x_du_perso, y_du_perso):
     for ennemi in ennemis_liste:
         if x_du_perso > ennemi[0]:
             ennemi[0] += 1
+            ennemi[2] = '2'
         if x_du_perso < ennemi[0]:
             ennemi[0] -= 1
+            ennemi[2] = '1'
         if y_du_perso > ennemi[1]:
             ennemi[1] += 1
         if y_du_perso < ennemi[1]:
@@ -133,7 +135,7 @@ def update():
     global perso_x, perso_y, ennemis_liste, tirs_liste
     perso_x, perso_y = deplacement_perso(perso_x, perso_y)
     ennemis_liste = ennemis_deplacement(ennemis_liste, perso_x, perso_y)
-    ennemis_liste = ennemis_creation(ennemis_liste)
+    ennemis_liste = ennemis_creation(ennemis_liste, perso_x)
 
     # creation des tirs en fonction de la position du vaisseau
     tirs_liste = tirs_creation(perso_x, perso_y, tirs_liste)
