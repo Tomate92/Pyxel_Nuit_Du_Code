@@ -16,7 +16,8 @@ import random
 px.init(256, 256, title="Test")
 
 # chargement des ressources
-px.load("3.pyxres")
+px.load("datas.pyxres")
+
 
 #####################################################
 ##################### Variables #####################
@@ -27,7 +28,7 @@ perso_y = 236
 
 #persoAuthMouv = True
 
-ennemis_liste = []
+ennemis_liste = [[61, 43], [52, 93], [59, 12]]
 
 # initialisation des tirs
 tirs_liste = []
@@ -36,45 +37,55 @@ tirs_liste = []
 rochersListL = [[5, 210], [20, 210], [60, 210], [95, 210], [95, 228], [95, 243]]
 rocherListB = []
 
-perso_pos = '1'
-
 #####################################################
 ##################### FONCTIONS #####################
 #####################################################
 
 
 def deplacement_perso(x, y):
-    global rochersListL, perso_x, perso_y, perso_pos#, persoAuthMouv
+    global rochersListL, perso_x, perso_y#, persoAuthMouv
 
+    if px.btnp(px.KEY_ESCAPE):
+        px.quit
     if px.btn(px.KEY_RIGHT):
-        if (x < 248) :
-            x = x + 3
-            perso_pos = '1'
+        for rocher in rochersListL:
+            if rocher[0] <= perso_x+23:
+                perso_x = perso_x-1
+            elif (x < 248):
+                x += 1
     if px.btn(px.KEY_LEFT):
-        if (x > 0) :
-            x = x - 3
-            perso_pos = '2'
-    if px.btn(px.KEY_DOWN):
-        if (y < 248) :
-            y = y + 3
+        for rocher in rochersListL:
+            if rocher[0]+23 >= perso_x:
+                perso_x = perso_x+1
+            elif (x > 0):
+                x -= 1        
     if px.btn(px.KEY_UP):
-        if (y > 0) :
-            y = y - 3
-    return x, y, perso_pos
+        for rocher in rochersListL:
+            if rocher[0] <= perso_x+23:
+                perso_y = perso_y+1
+            elif (y > 0):
+                y -= 1  
+    if px.btn(px.KEY_DOWN):
+        for rocher in rochersListL:
+            if rocher[0]+23 >= perso_x:
+                perso_y = perso_y+1
+            elif (y < 238):
+                y += 1          
+    return x, y
 
 
 def ennemis_deplacement(ennemis_liste, x_du_perso, y_du_perso):
     for ennemi in ennemis_liste:
         if x_du_perso > ennemi[0]:
-            ennemi[0] += 0.5
+            ennemi[0] += 1
             ennemi[2] = '2'
         if x_du_perso < ennemi[0]:
-            ennemi[0] -= 0.5
+            ennemi[0] -= 1
             ennemi[2] = '1'
         if y_du_perso > ennemi[1]:
-            ennemi[1] += 0.5
+            ennemi[1] += 1
         if y_du_perso < ennemi[1]:
-            ennemi[1] -= 0.5
+            ennemi[1] -= 1
     return ennemis_liste
 
 
@@ -87,7 +98,7 @@ def ennemis_creation(ennemis_liste, x_du_perso):
     if x_du_perso < x_ennemi:
         position = '1'
     # un ennemi par seconde
-    if (px.frame_count % 60 == 0):
+    if (px.frame_count % 30 == 0):
         ennemis_liste.append([x_ennemi, y_ennemi, position])
     return ennemis_liste
 
@@ -128,7 +139,7 @@ def tirs_deplacement(tirs_liste):
 #################### VOID UPDATE ####################
 def update():
     global perso_x, perso_y, ennemis_liste, tirs_liste
-    perso_x, perso_y, perso_pos = deplacement_perso(perso_x, perso_y)
+    perso_x, perso_y = deplacement_perso(perso_x, perso_y)
     ennemis_liste = ennemis_deplacement(ennemis_liste, perso_x, perso_y)
     ennemis_liste = ennemis_creation(ennemis_liste, perso_x)
 
@@ -142,7 +153,6 @@ def update():
 ##################### VOID DRAW #####################
 
 def draw():
-    global perso_pos, perso_x, perso_y
     # Fond rouge
     px.cls(4)
 
@@ -152,10 +162,8 @@ def draw():
     # Copie la région de taille (w, h) de (u, v) de la banque d’image img(0-2) à (x, y).
     # Si une valeur négative est mise pour w(ou h), la copie sera inversée horizontalement
     # (ou verticalement). Si colkey est spécifiée, elle sera traitée comme une couleur transparente.
-    if perso_pos == '1':
-        px.blt(perso_x, perso_y, 0, 0, 8, 16, 15, 5)
-    elif perso_pos == '2':
-        px.blt(perso_x, perso_y, 0, 0, 8, -16, 15, 5)
+
+    px.blt(perso_x, perso_y, 0, 0, 8, 16, 15, 5)
 
     #Draw le décor (rochers)
     #Rochers simples
@@ -171,9 +179,9 @@ def draw():
 
     for ennemi in ennemis_liste:
         if ennemi[2] == '2':
-            px.blt(ennemi[0], ennemi[1], 0, 0, 120, 16, 16, 5)
-        if ennemi[2] == '1':
             px.blt(ennemi[0], ennemi[1], 0, 0, 120, -16, 16, 5)
+        if ennemi[2] == '1':
+            px.blt(ennemi[0], ennemi[1], 0, 0, 120, 16, 16, 5)
 
 
 ##################### EXECUTION DU CODE #####################
