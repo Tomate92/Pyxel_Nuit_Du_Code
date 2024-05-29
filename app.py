@@ -64,10 +64,9 @@ def deplacement_perso(x, y):
 
     for rocher in rochersListL:
         if rocher[0] < x2 < rocher[0]+23 and rocher[1] < y2 < rocher[1]:
-            pass
-        else:
-            x, y = x2, y2 
-    return x, y
+            return x, y
+
+    return x2, y2
 
 
 def ennemis_deplacement(ennemis_liste, x_du_perso, y_du_perso):
