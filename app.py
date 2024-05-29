@@ -26,6 +26,8 @@ px.load("3.pyxres")
 perso_x = 7
 perso_y = 236
 
+persoAuthMouv = True
+
 ennemis_liste = [[61, 43], [52, 93], [59, 12]]
 
 # initialisation des tirs
@@ -41,20 +43,26 @@ rocherListB = []
 
 
 def deplacement_perso(x, y):
-    if px.btnp(px.KEY_ESCAPE):
-        px.quit
-    if px.btn(px.KEY_RIGHT):
-        if (x < 248):
-            x = x + 1
-    if px.btn(px.KEY_LEFT):
-        if (x > 0):
-            x = x - 1
-    if px.btn(px.KEY_UP):
-        if (y > 0):
-            y = y - 1
-    if px.btn(px.KEY_DOWN):
-        if (y < 248):
-            y = y + 1
+    global rochersListL, perso_x, perso_y, persoAuthMouv
+
+    for rocher in rochersListL:
+        if rocher[0] <= perso_x+15 and rocher[1] <= perso_y+15 and rocher[0]+8 >= perso_x and rocher[1]+8 >= perso_y:
+            pass
+        else:
+            if px.btnp(px.KEY_ESCAPE):
+                px.quit
+            if px.btn(px.KEY_RIGHT):
+                if (x < 248):
+                    x = x + 1
+            if px.btn(px.KEY_LEFT):
+                if (x > 0):
+                    x = x - 1
+            if px.btn(px.KEY_UP):
+                if (y > 0):
+                    y = y - 1
+            if px.btn(px.KEY_DOWN):
+                if (y < 238):
+                    y = y + 1
     return x, y
 
 
@@ -93,11 +101,17 @@ def tirs_deplacement(tirs_liste):
             tirs_liste.remove(tir)
     return tirs_liste
 
-"""def rochersL_creation(x, y):
-    global rochersListL
-    rochersListL.append([x, y])
+"""def rochersL_colisions(x, y):
+    global rochersListL, perso_x, perso_y, persoAuthMouv
 
-def rochersL_creation(x, y):"""
+    persoAuthMouv = True
+
+    for rocher in rochersListL:
+        if rocher[0] <= perso_x+15 and rocher[1] <= perso_y+15 and rocher[0]+8 >= perso_x and rocher[1]+8 >= perso_y:
+            persoAuthMouv = False"""
+
+
+#def rochersL_creation(x, y):
 
 
 
