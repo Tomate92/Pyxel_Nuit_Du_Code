@@ -50,6 +50,7 @@ def deplacement_perso(x,y):
         y += 1
     if px.btn(px.KEY_DOWN):
         y += -1
+    return x, y
 
 
 #################### VOID UPDATE ####################
