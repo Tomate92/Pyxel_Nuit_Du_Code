@@ -59,7 +59,9 @@ def update():
 ##################### VOID DRAW #####################
 
 def draw():
-    pass
+    px.cls(0)
+    px.rect(perso_x, perso_y, 16, 16, 1)
+
 
 ##################### EXECUTION DU CODE #####################
 px.run(update, draw)
