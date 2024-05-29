@@ -6,7 +6,7 @@
 # Installer Pyxel en portable en local (très pratique à l'école car on a pas les droits admin) : https://nuit-du-code.forge.apps.education.fr/DOCUMENTATION/05-materiel-logiciels#python-pyxel_1
 
 # Copyright © 2024 GauGoth Corp. All rights reserved - http://gaugoth.corp.free.fr
-import pyxel as px
+import pyxel
 import random  
 coucou
 
@@ -14,16 +14,17 @@ coucou
 
 # taille de la fenetre 128x128 pixels OU 256x256
 # /!\ ne pas modifier => taille obligatoire pour le concours
-px.init(256, 256, title="Test Nuit du c0de")
+pyxel.init(256, 256, title="Test Nuit du c0de")
 
 # chargement des ressources
-px.load("3.pyxres")
+pyxel.load("3.pyxres")
 
 
 
 #####################################################
 ##################### FONCTIONS #####################
 #####################################################
+
 
 
 
@@ -34,7 +35,9 @@ px.load("3.pyxres")
 
 
 #################### VOID UPDATE ####################
-
+def update():
+    if pyxel.btnp(pyxel.KEY_ESCAPE):
+        pyxel.quit
 
 
 
