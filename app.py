@@ -7,7 +7,7 @@
 
 # Copyright © 2024 GauGoth Corp. All rights reserved - http://gaugoth.corp.free.fr
 import pyxel as px
-import random  
+import random
 
 ##################### INITIALISATION #####################
 
@@ -16,12 +16,10 @@ import random
 px.init(256, 256, title="Test")
 
 # chargement des ressources
-px.load("datas.pyxres")
-
+px.load("3.pyxres")
 
 # initialisation des tirs
 tirs_liste = []
-
 #####################################################
 ##################### Variables #####################
 #####################################################
@@ -29,19 +27,19 @@ tirs_liste = []
 perso_x = 7
 perso_y = 236
 
+ennemis_liste = [[61, 43], [52, 93], [59, 12]]
+
 
 #####################################################
 ##################### FONCTIONS #####################
 #####################################################
 
 
-
-
 #####################################################
 ##################### PROGRAMME #####################
 #####################################################
 
-def deplacement_perso(x,y):
+def deplacement_perso(x, y):
     if px.btnp(px.KEY_ESCAPE):
         px.quit
     if px.btn(px.KEY_RIGHT):
@@ -54,26 +52,53 @@ def deplacement_perso(x,y):
         if (y > 0):
             y = y - 1
     if px.btn(px.KEY_DOWN):
-        if (y < 238):
+        if (y < 248):
             y = y + 1
     return x, y
 
 
-def tirs_creation(x,y,tirs_liste):
+def ennemis_deplacement(ennemis_liste, x_du_perso, y_du_perso):
+    for ennemi in ennemis_liste:
+        if x_du_perso > ennemi[0]:
+            ennemi[0] += 1
+        if x_du_perso < ennemi[0]:
+            ennemi[0] -= 1
+        if y_du_perso > ennemi[1]:
+            ennemi[1] += 1
+        if y_du_perso < ennemi[1]:
+            ennemi[1] -= 1
+    return ennemis_liste
+
+
+def ennemis_creation(ennemis_liste):
+    """création aléatoire des ennemis"""
+
+    # un ennemi par seconde
+    if (px.frame_count % 30 == 0):
+        ennemis_liste.append([random.randint(0, 256), random.randint(0, 256)])
+    return ennemis_liste
+
+
+def tirs_creation(x, y, tirs_liste):
     if px.btnr(px.MOUSE_BUTTON_LEFT) or px.btnr(px.KEY_SPACE):
-        tirs_liste.append([x+8, y-4])
+        tirs_liste.append([x + 8, y - 4])
     return tirs_liste
+
 
 def tirs_deplacement(tirs_liste):
     for tir in tirs_liste:
         tir[1] -= 1
-        if  tir[1]<-8:
+        if tir[1] < -8:
             tirs_liste.remove(tir)
     return tirs_liste
+
+
 #################### VOID UPDATE ####################
 def update():
-    global perso_x, perso_y, perso_x, perso_y, tirs_liste
+    global perso_x, perso_y, ennemis_liste, tirs_liste
     perso_x, perso_y = deplacement_perso(perso_x, perso_y)
+    ennemis_liste = ennemis_deplacement(ennemis_liste, perso_x, perso_y)
+    ennemis_liste = ennemis_creation(ennemis_liste)
 
     # creation des tirs en fonction de la position du vaisseau
     tirs_liste = tirs_creation(perso_x, perso_y, tirs_liste)
@@ -82,39 +107,52 @@ def update():
     tirs_liste = tirs_deplacement(tirs_liste)
 
 
+def tirs_creation(x, y, tirs_liste):
+    if px.btnr(px.MOUSE_BUTTON_LEFT) or px.btnr(px.KEY_SPACE):
+        tirs_liste.append([x + 8, y - 4])
+    return tirs_liste
+
+
+def tirs_deplacement(tirs_liste):
+    for tir in tirs_liste:
+        tir[1] -= 1
+        if tir[1] < -8:
+            tirs_liste.remove(tir)
+    return tirs_liste
+
+
 ##################### VOID DRAW #####################
 
 def draw():
-    #Fond rouge
+    # Fond rouge
     px.cls(4)
 
-    #Draw le personnage
-    #px.rect(perso_x, perso_y, 16, 16, 8)
-    #blt(x, y, img, u, v, w, h, [colkey])
-    #Copie la région de taille (w, h) de (u, v) de la banque d’image img(0-2) à (x, y).
-    #Si une valeur négative est mise pour w(ou h), la copie sera inversée horizontalement 
-    #(ou verticalement). Si colkey est spécifiée, elle sera traitée comme une couleur transparente.
+    # Draw le personnage
+    # px.rect(perso_x, perso_y, 16, 16, 8)
+    # blt(x, y, img, u, v, w, h, [colkey])
+    # Copie la région de taille (w, h) de (u, v) de la banque d’image img(0-2) à (x, y).
+    # Si une valeur négative est mise pour w(ou h), la copie sera inversée horizontalement
+    # (ou verticalement). Si colkey est spécifiée, elle sera traitée comme une couleur transparente.
 
     px.blt(perso_x, perso_y, 0, 0, 8, 16, 15, 5)
 
-    #Draw le décor (rochers)
-    #Rochers simples
+    # Draw le décor (rochers)
+    # Rochers simples
     px.blt(5, 210, 0, 176, 128, 16, 15, 5)
     px.blt(20, 210, 0, 176, 128, 16, 15, 5)
     px.blt(60, 210, 0, 176, 128, 16, 15, 5)
-    px.blt(95, 228, 0, 176, 128, 16, 15, 5)
-    px.blt(95, 243, 0, 176, 128, 16, 15, 5)
-
-    #Rochers 3x16
-    px.blt(75, 210, 0, 224, 128, 3*16, 16, 5)
+    px.blt(75, 235, 0, 176, 128, 16, 15, 5)
+    # Rochers 3x16
+    px.blt(75, 210, 0, 224, 128, 3 * 16, 16, 5)
 
     # tirs
     for tir in tirs_liste:
         px.rect(tir[0], tir[1], 1, 4, 10)
 
+    for ennemi in ennemis_liste:
+        px.rect(ennemi[0], ennemi[1], 8, 8, 15)
+
+    ##################### EXECUTION DU CODE #####################
 
 
-
-
-##################### EXECUTION DU CODE #####################
 px.run(update, draw)
