@@ -102,21 +102,6 @@ def ennemis_creation(ennemis_liste, x_du_perso):
     return ennemis_liste
 
 
-def tirs_creation(x, y, tirs_liste):
-    if px.btnr(px.MOUSE_BUTTON_LEFT) or px.btnr(px.KEY_SPACE):
-        tirs_liste.append([x + 16, y + 3])
-    return tirs_liste
-
-
-def tirs_deplacement(tirs_liste):
-    for tir in tirs_liste:
-        tir[0] += 1
-        if tir[0] > 270:
-            tirs_liste.remove(tir)
-            print("supprimé")
-
-    return tirs_liste
-
 
 """def rochersL_colisions(x, y):
     global rochersListL, perso_x, perso_y, persoAuthMouv
@@ -136,7 +121,7 @@ def tirs_creation(x, y, tirs_liste):
 
 def tirs_deplacement(tirs_liste):
     for tir in tirs_liste:
-        tir[0] += 1
+        tir[0] += 2
         if tir[0] > 270:
             tirs_liste.remove(tir)
             print("supprimé")
