@@ -8,7 +8,7 @@
 # Copyright © 2024 GauGoth Corp. All rights reserved - http://gaugoth.corp.free.fr
 import pyxel as px
 import random  
-
+coucou
 
 ##################### INITIALISATION #####################
 
