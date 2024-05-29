@@ -16,7 +16,7 @@ import random
 px.init(256, 256, title="Test")
 
 # chargement des ressources
-px.load("3.pyxres")
+px.load("datas.pyxres")
 
 
 #####################################################
@@ -45,24 +45,26 @@ rocherListB = []
 def deplacement_perso(x, y):
     global rochersListL, perso_x, perso_y, persoAuthMouv
 
-    for rocher in rochersListL:
-        if rocher[0] <= perso_x+15 and rocher[1] <= perso_y+15 and rocher[0]+8 >= perso_x and rocher[1]+8 >= perso_y:
-            pass
-        else:
-            if px.btnp(px.KEY_ESCAPE):
-                px.quit
-            if px.btn(px.KEY_RIGHT):
-                if (x < 248):
-                    x = x + 1
-            if px.btn(px.KEY_LEFT):
-                if (x > 0):
-                    x = x - 1
-            if px.btn(px.KEY_UP):
-                if (y > 0):
-                    y = y - 1
-            if px.btn(px.KEY_DOWN):
-                if (y < 238):
-                    y = y + 1
+    if px.btnp(px.KEY_ESCAPE):
+        px.quit
+    if px.btn(px.KEY_RIGHT):
+        for rocher in rochersListL:
+            if rocher[0] <= perso_x+23:
+                perso_x = perso_x-1
+            elif (x < 248):
+                x = x + 1
+    if px.btn(px.KEY_LEFT):
+        for rocher in rochersListL:
+            if rocher[0] >= perso_x-23:
+                perso_x = perso_x+1
+            elif (x > 0):
+                x = x - 1        
+    if px.btn(px.KEY_UP):
+        if (y > 0):
+            y = y - 1
+    if px.btn(px.KEY_DOWN):
+        if (y < 238):
+            y = y + 1
     return x, y
 
 
