@@ -60,7 +60,7 @@ def update():
 
 def draw():
     px.cls(0)
-    px.rect(perso_x, perso_y, 16, 16, 1)
+    px.rect(perso_x, perso_y, 16, 16, 8)
 
 
 ##################### EXECUTION DU CODE #####################
