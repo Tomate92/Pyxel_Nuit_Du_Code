@@ -41,7 +41,6 @@ perso_pos = '1'
 
 vies = 4
 
-
 #####################################################
 ##################### FONCTIONS #####################
 #####################################################
@@ -117,6 +116,7 @@ def ennemis_creation(ennemis_liste, x_du_perso):
 def tirs_creation(x, y, tirs_liste):
     if px.btnr(px.MOUSE_BUTTON_LEFT) or px.btnr(px.KEY_SPACE):
         tirs_liste.append([x + 16, y + 2])
+        px.play(0,0)
     return tirs_liste
 
 
@@ -145,6 +145,7 @@ def ennemis_suppression():
             if ennemi[0] <= tir[0] + 1 and ennemi[0] + 8 >= tir[0] and ennemi[1] + 8 >= tir[1]:
                 ennemis_liste.remove(ennemi)
                 tirs_liste.remove(tir)
+                px.play(1, 1)
 
             # def rochersL_creation(x, y):
 
@@ -156,6 +157,9 @@ def ennemis_suppression():
 #################### VOID UPDATE ####################
 def update():
     global perso_x, perso_y, ennemis_liste, tirs_liste, vies
+    if px.frame_count == 0:
+        px.playm(0, 20, True)
+
     perso_x, perso_y = deplacement_perso(perso_x, perso_y)
     ennemis_liste = ennemis_deplacement(ennemis_liste, perso_x, perso_y)
     ennemis_liste = ennemis_creation(ennemis_liste, perso_x)
@@ -225,3 +229,4 @@ def draw():
 
 ##################### EXECUTION DU CODE #####################
 px.run(update, draw)
+px.playm(0, 20, True)
