@@ -16,7 +16,7 @@ import random
 px.init(256, 256, title="Test")
 
 # chargement des ressources
-px.load("3.pyxres")
+px.load("res.pyxres")
 
 
 
@@ -63,16 +63,21 @@ def update():
     perso_x, perso_y = deplacement_perso(perso_x, perso_y)
 
 
-
-
-
-
-
 ##################### VOID DRAW #####################
 
 def draw():
     px.cls(0)
-    px.rect(perso_x, perso_y, 16, 16, 8)
+
+    #Draw le personnage
+    #px.rect(perso_x, perso_y, 16, 16, 8)
+    #blt(x, y, img, u, v, w, h, [colkey])
+    #Copie la région de taille (w, h) de (u, v) de la banque d’image img(0-2) à (x, y).
+    #Si une valeur négative est mise pour w(ou h), la copie sera inversée horizontalement 
+    #(ou verticalement). Si colkey est spécifiée, elle sera traitée comme une couleur transparente.
+
+    px.blt(120, 60, 0, 0, 8, 16, 15, 5)
+
+    #Draw le décor (rochers)
     px.blt(60, 60, 0, 176, 128, 16, 15, 5)
     px.blt(75, 60, 0, 176, 128, 16, 15, 5)
     px.blt(90, 60, 0, 176, 128, 16, 15, 5)
