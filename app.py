@@ -52,19 +52,25 @@ def deplacement_perso(x, y):
             if rocher[0] <= perso_x+23:
                 perso_x = perso_x-1
             elif (x < 248):
-                x = x + 1
+                x += 1
     if px.btn(px.KEY_LEFT):
         for rocher in rochersListL:
-            if rocher[0] >= perso_x-23:
+            if rocher[0]+23 >= perso_x:
                 perso_x = perso_x+1
             elif (x > 0):
-                x = x - 1        
+                x -= 1        
     if px.btn(px.KEY_UP):
-        if (y > 0):
-            y = y - 1
+        for rocher in rochersListL:
+            if rocher[0] <= perso_x+23:
+                perso_y = perso_y+1
+            elif (y > 0):
+                y -= 1  
     if px.btn(px.KEY_DOWN):
-        if (y < 238):
-            y = y + 1
+        for rocher in rochersListL:
+            if rocher[0]+23 >= perso_x:
+                perso_y = perso_y+1
+            elif (y < 238):
+                y += 1          
     return x, y
 
 
