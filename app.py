@@ -44,33 +44,29 @@ rocherListB = []
 
 def deplacement_perso(x, y):
     global rochersListL, perso_x, perso_y#, persoAuthMouv
+    x2, y2 = x, y
 
     if px.btnp(px.KEY_ESCAPE):
         px.quit
+
     if px.btn(px.KEY_RIGHT):
-        for rocher in rochersListL:
-            if rocher[0] <= perso_x+23:
-                perso_x = perso_x-1
-            elif (x < 248):
-                x += 1
+        if (x < 248):
+            x2 += 1
     if px.btn(px.KEY_LEFT):
-        for rocher in rochersListL:
-            if rocher[0]+23 >= perso_x:
-                perso_x = perso_x+1
-            elif (x > 0):
-                x -= 1        
+        if (x > 0):
+            x2 -= 1
     if px.btn(px.KEY_UP):
-        for rocher in rochersListL:
-            if rocher[0] <= perso_x+23:
-                perso_y = perso_y+1
-            elif (y > 0):
-                y -= 1  
+        if (y > 0):
+            y2 -= 1
     if px.btn(px.KEY_DOWN):
-        for rocher in rochersListL:
-            if rocher[0]+23 >= perso_x:
-                perso_y = perso_y+1
-            elif (y < 238):
-                y += 1          
+        if (y < 238):
+            y2 += 1
+
+    for rocher in rochersListL:
+        if rocher[0] < x2 < rocher[0]+23 and rocher[1] < y2 < rocher[1]:
+            pass
+        else:
+            x, y = x2, y2 
     return x, y
 
 
@@ -87,18 +83,18 @@ def ennemis_deplacement(ennemis_liste, x_du_perso, y_du_perso):
     return ennemis_liste
 
 
-def ennemis_creation(ennemis_liste, x_du_perso, y_du_perso):
-    x_ennemi = random.randint(0, 256)
-    y_ennemi = random.randint(0, 256)
+def ennemis_creation(ennemis_liste):
+    """création aléatoire des ennemis"""
+
     # un ennemi par seconde
     if (px.frame_count % 30 == 0):
-        ennemis_liste.append([x_ennemi, y_ennemi])
+        ennemis_liste.append([random.randint(0, 256), random.randint(0, 256)])
     return ennemis_liste
 
 
 def tirs_creation(x, y, tirs_liste):
     if px.btnr(px.MOUSE_BUTTON_LEFT) or px.btnr(px.KEY_SPACE):
-        tirs_liste.append([x + 16, y + 3])
+        tirs_liste.append([x + 16, y + 8])
     return tirs_liste
 
 
@@ -168,7 +164,7 @@ def draw():
 
     # tirs
     for tir in tirs_liste:
-        px.blt(tir[0], tir[1], 0, 48, 8, 7, 7, 5)
+        px.rect(tir[0], tir[1], 1, 4, 10)
 
     for ennemi in ennemis_liste:
         # px.rect(ennemi[0], ennemi[1], 8, 8, 15)
