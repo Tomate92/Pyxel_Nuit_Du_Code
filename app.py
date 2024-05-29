@@ -92,15 +92,17 @@ def ennemis_creation(ennemis_liste):
 
 def tirs_creation(x, y, tirs_liste):
     if px.btnr(px.MOUSE_BUTTON_LEFT) or px.btnr(px.KEY_SPACE):
-        tirs_liste.append([x + 8, y - 4])
+        tirs_liste.append([x + 16, y + 8])
     return tirs_liste
 
 
 def tirs_deplacement(tirs_liste):
     for tir in tirs_liste:
-        tir[1] -= 1
-        if tir[1] < -8:
+        tir[0] += 1
+        if tir[0] > 270:
             tirs_liste.remove(tir)
+            print("supprimé")
+
     return tirs_liste
 
 """def rochersL_colisions(x, y):
@@ -135,20 +137,6 @@ def update():
     tirs_liste = tirs_deplacement(tirs_liste)
 
 
-def tirs_creation(x, y, tirs_liste):
-    if px.btnr(px.MOUSE_BUTTON_LEFT) or px.btnr(px.KEY_SPACE):
-        tirs_liste.append([x + 8, y - 4])
-    return tirs_liste
-
-
-def tirs_deplacement(tirs_liste):
-    for tir in tirs_liste:
-        tir[1] -= 1
-        if tir[1] < -8:
-            tirs_liste.remove(tir)
-    return tirs_liste
-
-
 ##################### VOID DRAW #####################
 
 def draw():
@@ -177,9 +165,9 @@ def draw():
         px.rect(tir[0], tir[1], 1, 4, 10)
 
     for ennemi in ennemis_liste:
-        px.rect(ennemi[0], ennemi[1], 8, 8, 15)
+        # px.rect(ennemi[0], ennemi[1], 8, 8, 15)
+        px.blt(ennemi[0], ennemi[1], 0, 0, 120, 16, 16, 5)
 
-    ##################### EXECUTION DU CODE #####################
 
-
+##################### EXECUTION DU CODE #####################
 px.run(update, draw)
