@@ -66,7 +66,8 @@ def update():
 ##################### VOID DRAW #####################
 
 def draw():
-    px.cls(0)
+    #Fond rouge
+    px.cls(4)
 
     #Draw le personnage
     #px.rect(perso_x, perso_y, 16, 16, 8)
@@ -75,7 +76,7 @@ def draw():
     #Si une valeur négative est mise pour w(ou h), la copie sera inversée horizontalement 
     #(ou verticalement). Si colkey est spécifiée, elle sera traitée comme une couleur transparente.
 
-    px.blt(120, 60, 0, 0, 8, 16, 15, 5)
+    px.blt(perso_x, perso_y, 0, 0, 8, 16, 15, 5)
 
     #Draw le décor (rochers)
     px.blt(60, 60, 0, 176, 128, 16, 15, 5)
