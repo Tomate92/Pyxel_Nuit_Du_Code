@@ -26,7 +26,7 @@ px.load("datas.pyxres")
 perso_x = 7
 perso_y = 236
 
-persoAuthMouv = True
+#persoAuthMouv = True
 
 ennemis_liste = [[61, 43], [52, 93], [59, 12]]
 
@@ -43,7 +43,7 @@ rocherListB = []
 
 
 def deplacement_perso(x, y):
-    global rochersListL, perso_x, perso_y, persoAuthMouv
+    global rochersListL, perso_x, perso_y#, persoAuthMouv
 
     if px.btnp(px.KEY_ESCAPE):
         px.quit
