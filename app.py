@@ -16,7 +16,7 @@ import random
 px.init(256, 256, title="Test")
 
 # chargement des ressources
-px.load("res.pyxres")
+px.load("datas.pyxres")
 
 
 
@@ -79,11 +79,16 @@ def draw():
     px.blt(perso_x, perso_y, 0, 0, 8, 16, 15, 5)
 
     #Draw le décor (rochers)
-    px.blt(60, 60, 0, 176, 128, 16, 15, 5)
-    px.blt(75, 60, 0, 176, 128, 16, 15, 5)
-    px.blt(90, 60, 0, 176, 128, 16, 15, 5)
-    px.blt(105, 60, 0, 176, 128, 16, 15, 5)
-    px.blt(120, 60, 0, 176, 128, 16, 15, 5)
+    #Rochers simples
+    px.blt(5, 210, 0, 176, 128, 16, 15, 5)
+    px.blt(20, 210, 0, 176, 128, 16, 15, 5)
+    px.blt(60, 210, 0, 176, 128, 16, 15, 5)
+    px.blt(75, 235, 0, 176, 128, 16, 15, 5)
+    #Rochers 3x16
+    px.blt(75, 210, 0, 224, 128, 3*16, 16, 5)
+
+
+
 
 
 
