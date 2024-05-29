@@ -157,7 +157,10 @@ def ennemis_suppression():
         for tir in tirs_liste:
             if ennemi[0] <= tir[0] + 1 and ennemi[0] + 8 >= tir[0] and ennemi[1] + 8 >= tir[1]:
                 ennemis_liste.remove(ennemi)
-                tirs_liste.remove(tir)
+                try:
+                    tirs_liste.remove(tir)
+                except ValueError:
+                    pass
                 explosions_creation(ennemi[0], ennemi[1])
                 kill += 1
                 px.play(1, 1)
