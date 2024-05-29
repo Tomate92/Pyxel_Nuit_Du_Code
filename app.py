@@ -33,7 +33,7 @@ ennemis_liste = []
 tirs_liste = []
 
 # init des rochers
-rochersListL = [[5, 210], [20, 210], [60, 210], [95, 210], [95, 228], [95, 243], [60, 60], [75, 60], [75, 75], [60, 75]]
+rochersListL = [[5, 210], [20, 210], [60, 210], [95, 210], [95, 228], [95, 243]]
 rocherListB = []
 
 perso_pos = '1'
@@ -47,50 +47,44 @@ vies = 4
 
 
 def deplacement_perso(x, y):
-    #global rochersListL, perso_x, perso_y#, persoAuthMouv
-    x2, y2 = x, y
-
-    if px.btnp(px.KEY_ESCAPE):
-        px.quit
+    global rochersListL, perso_x, perso_y, perso_pos  # , persoAuthMouv
 
     if px.btn(px.KEY_RIGHT):
         if (x < 248):
-            x2 += 1
+            x = x + 3
+            perso_pos = '1'
     if px.btn(px.KEY_LEFT):
         if (x > 0):
-            x2 -= 1
+            x = x - 3
+            perso_pos = '2'
+    if px.btn(px.KEY_DOWN):
+        if (y < 248):
+            y = y + 3
     if px.btn(px.KEY_UP):
         if (y > 0):
-            y2 -= 1
-    if px.btn(px.KEY_DOWN):
-        if (y < 238):
-            y2 += 1
-
-    for rocher in rochersListL: #Si joueur trop proche rocher, on change pas les x,y
-        if rocher[0]-17 < x2 < rocher[0]+14 and rocher[1]-14 < y2 < rocher[1]+15:
-            return x, y
-
-    return x2, y2
+            y = y - 3
+    return x, y, perso_pos
 
 
 def ennemis_deplacement(ennemis_liste, x_du_perso, y_du_perso):
     for ennemi in ennemis_liste:
         if x_du_perso > ennemi[0]:
-            ennemi[0] += 0.5
+            ennemi[0] += ennemi[3]
             ennemi[2] = '2'
         if x_du_perso < ennemi[0]:
-            ennemi[0] -= 0.5
+            ennemi[0] -= ennemi[3]
             ennemi[2] = '1'
         if y_du_perso > ennemi[1]:
-            ennemi[1] += 0.5
+            ennemi[1] += ennemi[3]
         if y_du_perso < ennemi[1]:
-            ennemi[1] -= 0.5
+            ennemi[1] -= ennemi[3]
     return ennemis_liste
 
 
 def ennemis_creation(ennemis_liste, x_du_perso):
     x_ennemi = random.randint(0, 256)
     y_ennemi = random.randint(0, 256)
+    vitesse_ennemi = random.randint(50, 150) / 100
 
     if x_du_perso > x_ennemi:
         position = '2'
@@ -98,9 +92,29 @@ def ennemis_creation(ennemis_liste, x_du_perso):
         position = '1'
     # un ennemi par seconde
     if (px.frame_count % 60 == 0):
-        ennemis_liste.append([x_ennemi, y_ennemi, position])
+        ennemis_liste.append([x_ennemi, y_ennemi, position, vitesse_ennemi])
     return ennemis_liste
 
+
+def tirs_creation(x, y, tirs_liste, perso_pos):
+    if px.btnr(px.MOUSE_BUTTON_LEFT) or px.btnr(px.KEY_SPACE):
+        if perso_pos == '1':
+            tirs_liste.append([x + 16, y + 3, perso_pos])
+        elif perso_pos == '2':
+            tirs_liste.append([x - 16, y + 3, perso_pos])
+    return tirs_liste
+
+
+def tirs_deplacement(tirs_liste):
+    for tir in tirs_liste:
+        if tir[2] == '1':
+            tir[0] += 1
+        elif tir[2] == '2':
+            tir[0] += -1
+        if tir[0] > 270 or tir[0] < -5:
+            tirs_liste.remove(tir)
+
+    return tirs_liste
 
 
 """def rochersL_colisions(x, y):
@@ -111,22 +125,6 @@ def ennemis_creation(ennemis_liste, x_du_perso):
     for rocher in rochersListL:
         if rocher[0] <= perso_x+15 and rocher[1] <= perso_y+15 and rocher[0]+8 >= perso_x and rocher[1]+8 >= perso_y:
             persoAuthMouv = False"""
-
-
-def tirs_creation(x, y, tirs_liste):
-    if px.btnr(px.MOUSE_BUTTON_LEFT) or px.btnr(px.KEY_SPACE):
-        tirs_liste.append([x + 16, y + 2])
-    return tirs_liste
-
-
-def tirs_deplacement(tirs_liste):
-    for tir in tirs_liste:
-        tir[0] += 2
-        if tir[0] > 270:
-            tirs_liste.remove(tir)
-            print("supprimé")
-
-    return tirs_liste
 
 
 def enemi_delet(vies):
@@ -144,8 +142,10 @@ def ennemis_suppression():
             if ennemi[0] <= tir[0] + 1 and ennemi[0] + 8 >= tir[0] and ennemi[1] + 8 >= tir[1]:
                 ennemis_liste.remove(ennemi)
                 tirs_liste.remove(tir)
+    return ennemis_liste
 
-            # def rochersL_creation(x, y):
+
+# def rochersL_creation(x, y):
 
 
 #####################################################
@@ -154,18 +154,18 @@ def ennemis_suppression():
 
 #################### VOID UPDATE ####################
 def update():
-    global perso_x, perso_y, ennemis_liste, tirs_liste, vies
-    perso_x, perso_y = deplacement_perso(perso_x, perso_y)
+    global perso_x, perso_y, ennemis_liste, tirs_liste, vies, perso_pos
+    perso_x, perso_y, perso_pos = deplacement_perso(perso_x, perso_y)
     ennemis_liste = ennemis_deplacement(ennemis_liste, perso_x, perso_y)
     ennemis_liste = ennemis_creation(ennemis_liste, perso_x)
 
     # creation des tirs en fonction de la position du vaisseau
-    tirs_liste = tirs_creation(perso_x, perso_y, tirs_liste)
+    tirs_liste = tirs_creation(perso_x, perso_y, tirs_liste, perso_pos)
 
     # mise a jour des positions des tirs
     tirs_liste = tirs_deplacement(tirs_liste)
 
-    ennemis_suppression()
+    ennemis_liste = ennemis_suppression()
     vies = enemi_delet(vies)
 
 
@@ -193,7 +193,7 @@ def draw():
         px.blt(rocherL[0], rocherL[1], 0, 176, 128, 16, 15, 5)
 
     # Rochers 3x16
-    #px.blt(75, 210, 0, 224, 128, 3 * 16, 16, 5)
+    px.blt(75, 210, 0, 224, 128, 3 * 16, 16, 5)
 
     if vies > 0:
         px.text(5, 5, 'VIES:' + str(vies), 7)
