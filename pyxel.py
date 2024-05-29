@@ -17,7 +17,7 @@ import random
 px.init(256, 256, title="Test Nuit du c0de")
 
 # chargement des ressources
-px.load("res.pyxres")
+px.load("3.pyxres")
 
 
 
