@@ -43,7 +43,7 @@ def deplacement_perso(x,y):
     if px.btnp(px.KEY_ESCAPE):
         px.quit
     if px.btn(px.KEY_RIGHT):
-        if (x < 120):
+        if (x < 248):
             x = x + 1
     if px.btn(px.KEY_LEFT):
         if (x > 0):
@@ -52,7 +52,7 @@ def deplacement_perso(x,y):
         if (y > 0):
             y = y - 1
     if px.btn(px.KEY_DOWN):
-        if (y < 120):
+        if (y < 248):
             y = y + 1
     return x, y
 
